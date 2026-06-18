@@ -50,6 +50,15 @@
     <Page Remove="en-US\RUKNBIM.ElementID.xaml" />
   </ItemGroup>
 
+  <!-- Exclude the decompiled reference folder from all build actions -->
+  <ItemGroup>
+    <Compile Remove="decompiled_selectbyrevitid_2024\**" />
+    <Page Remove="decompiled_selectbyrevitid_2024\**" />
+    <None Remove="decompiled_selectbyrevitid_2024\**" />
+    <EmbeddedResource Remove="decompiled_selectbyrevitid_2024\**" />
+    <Content Remove="decompiled_selectbyrevitid_2024\**" />
+  </ItemGroup>
+
   <!-- Auto-Deploy to Navisworks AppData ApplicationPlugins Folder -->
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <!-- Package Contents -->
