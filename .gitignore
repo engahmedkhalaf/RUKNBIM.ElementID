@@ -1,0 +1,11 @@
+# Build folders
+bin/
+obj/
+
+# User-specific files
+*.user
+*.userosscache
+*.sln.docstates
+
+# Visual Studio cache and work files
+.vs/

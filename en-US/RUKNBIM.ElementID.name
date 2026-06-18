@@ -1,0 +1,17 @@
+# Navisworks String Table
+Tab_KHAddins.Title=KH Addins
+PanelSource_KHAddins.Title=KH Addins
+Btn_SelectByRevitID.Text=Select By Revit ID
+Btn_SelectByRevitID.ToolTip=Select elements by Revit ID
+Btn_ZoomToSelection.Text=Zoom To Selection
+Btn_ZoomToSelection.ToolTip=Zoom to selected elements
+Btn_IsolateSelection.Text=Isolate Selection
+Btn_IsolateSelection.ToolTip=Isolate selected elements
+Btn_ClearIsolation.Text=Clear Isolation
+Btn_ClearIsolation.ToolTip=Clear element isolation
+Btn_AutoSectionBox.Text=Auto Section Box
+Btn_AutoSectionBox.ToolTip=Create section box around selected elements
+Btn_ClearSectionBox.Text=Clear Section Box
+Btn_ClearSectionBox.ToolTip=Clear current section box
+Btn_SaveViewpoint.Text=Save Viewpoint
+Btn_SaveViewpoint.ToolTip=Save current viewpoint

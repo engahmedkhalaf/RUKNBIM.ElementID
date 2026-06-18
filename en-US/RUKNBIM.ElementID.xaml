@@ -1,0 +1,18 @@
+<RibbonControl x:Uid="RUKNBIM_ElementID_Ribbon"
+    xmlns="clr-namespace:Autodesk.Windows;assembly=AdWindows"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:nvw="clr-namespace:Autodesk.Navisworks.Gui.Roamer.AIRLook;assembly=navisworks.gui.roamer">
+    <RibbonTab x:Uid="Tab_KHAddins" Id="KHAddinsTab" Title="KH Addins" KeyTip="K">
+        <RibbonPanel x:Uid="Panel_KHAddins" Id="KHAddinsPanel">
+            <RibbonPanelSource x:Uid="PanelSource_KHAddins" Title="KH Addins">
+                <nvw:NWRibbonButton x:Uid="Btn_SelectByRevitID" Id="SelectByRevitID" Size="Large" Text="Select By Revit ID" ShowText="True" Orientation="Vertical" />
+                <nvw:NWRibbonButton x:Uid="Btn_ZoomToSelection" Id="ZoomToSelection" Size="Large" Text="Zoom To Selection" ShowText="True" Orientation="Vertical" />
+                <nvw:NWRibbonButton x:Uid="Btn_IsolateSelection" Id="IsolateSelection" Size="Large" Text="Isolate Selection" ShowText="True" Orientation="Vertical" />
+                <nvw:NWRibbonButton x:Uid="Btn_ClearIsolation" Id="ClearIsolation" Size="Large" Text="Clear Isolation" ShowText="True" Orientation="Vertical" />
+                <nvw:NWRibbonButton x:Uid="Btn_AutoSectionBox" Id="AutoSectionBox" Size="Large" Text="Auto Section Box" ShowText="True" Orientation="Vertical" />
+                <nvw:NWRibbonButton x:Uid="Btn_ClearSectionBox" Id="ClearSectionBox" Size="Large" Text="Clear Section Box" ShowText="True" Orientation="Vertical" />
+                <nvw:NWRibbonButton x:Uid="Btn_SaveViewpoint" Id="SaveViewpoint" Size="Large" Text="Save Viewpoint" ShowText="True" Orientation="Vertical" />
+            </RibbonPanelSource>
+        </RibbonPanel>
+    </RibbonTab>
+</RibbonControl>
