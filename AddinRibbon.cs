@@ -69,18 +69,13 @@ namespace RUKNBIM.ElementID
                     break;
                 case "ClearIsolation":
                     NavisworksActions.RestoreVisibility(doc);
+                    NavisworksActions.ClearSectionBox(doc);
                     break;
                 case "AutoSectionBox":
                     NavisworksActions.CreateSectionBox(doc, doc.CurrentSelection.SelectedItems);
                     break;
                 case "ClearSectionBox":
-                    try
-                    {
-                        dynamic state = Autodesk.Navisworks.Api.ComApi.ComApiBridge.State;
-                        dynamic clipPlanes = state.CurrentView.ClipPlanes;
-                        clipPlanes.Mode = 0; // nwEClipMode.eNone
-                    }
-                    catch { }
+                    NavisworksActions.ClearSectionBox(doc);
                     break;
                 case "SaveViewpoint":
                     NavisworksActions.SaveViewpoint(doc, "");

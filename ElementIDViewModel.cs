@@ -77,6 +77,7 @@ namespace RUKNBIM.ElementID
             NavisworksActions.RestoreVisibility(doc);
             NavisworksActions.HideUnselected(doc, items);
             NavisworksActions.FocusCamera(doc);
+            NavisworksActions.CreateSectionBox(doc, items);
         }
 
         [RelayCommand]

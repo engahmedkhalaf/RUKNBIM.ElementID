@@ -73,7 +73,45 @@ namespace RUKNBIM.ElementID
         {
             if (doc.CurrentSelection.SelectedItems.Count > 0)
             {
-                doc.ActiveView.FocusOnCurrentSelection();
+                try
+                {
+                    var items = doc.CurrentSelection.SelectedItems;
+                    BoundingBox3D box = items.BoundingBox();
+                    if (box != null)
+                    {
+                        var center = new Point3D(
+                            (box.Min.X + box.Max.X) / 2.0,
+                            (box.Min.Y + box.Max.Y) / 2.0,
+                            (box.Min.Z + box.Max.Z) / 2.0
+                        );
+
+                        // Create a copy of current viewpoint to adjust
+                        var vp = doc.CurrentViewpoint.CreateCopy();
+                        
+                        // Align camera using native ZoomBox first
+                        vp.ZoomBox(box);
+
+                        // Adjust position and focal distance to zoom in a little bit closer (80% of the default distance)
+                        Vector3D direction = center - vp.Position;
+                        double originalDistance = direction.Length;
+                        if (originalDistance > 0.001)
+                        {
+                            double targetDistance = originalDistance * 0.8; // 80% of the default zoom-to-box distance
+                            vp.Position = center - direction.Multiply(0.8);
+                            vp.FocalDistance = targetDistance;
+                        }
+
+                        doc.CurrentViewpoint.CopyFrom(vp);
+                    }
+                    else
+                    {
+                        doc.ActiveView.FocusOnCurrentSelection();
+                    }
+                }
+                catch
+                {
+                    doc.ActiveView.FocusOnCurrentSelection();
+                }
             }
         }
 
@@ -83,28 +121,63 @@ namespace RUKNBIM.ElementID
 
             try
             {
-                // Create section box using COM dynamic dispatch
-                dynamic state = ComApiBridge.State;
-
-                // eObjectType_nwOpSelection = 1
-                dynamic selection = state.ObjectFactory(1, null, null);
-
-                // We use standard selection for COM
-                state.CurrentSelection.SelectAll();
-                dynamic currentSel = state.CurrentSelection;
-
-                // Execute the native sectioning command if available
-                doc.ActiveView.FocusOnCurrentSelection();
-
-                // Enable Sectioning via Viewpoint
                 var vp = doc.CurrentViewpoint.ToViewpoint();
-                // Since setting clipping planes via .NET is complex, we will focus the camera
-                // and rely on the user having the sectioning tool active, or use COM state.
+                var clipPlanes = vp?.InternalClipPlanes;
+                bool isSectioningEnabled = clipPlanes != null && clipPlanes.IsEnabled();
+
+                if (!isSectioningEnabled)
+                {
+                    Autodesk.Navisworks.Api.Interop.LcRmFrameworkInterface.ExecuteCommand(
+                        "RoamerGUI_OM_SECTION_MASTER_ENABLE",
+                        Autodesk.Navisworks.Api.Interop.LcUCIPExecutionContext.eTOOLBAR
+                    );
+                }
+
+                // Switch to Box mode
+                Autodesk.Navisworks.Api.Interop.LcRmFrameworkInterface.ExecuteCommand(
+                    "RoamerGUI_OM_SECTION_Mode_Box",
+                    Autodesk.Navisworks.Api.Interop.LcUCIPExecutionContext.eTOOLBAR
+                );
+
+                // Fit Selection
+                Autodesk.Navisworks.Api.Interop.LcRmFrameworkInterface.ExecuteCommand(
+                    "RoamerGUI_OM_SECTION_FIT_SELECTION",
+                    Autodesk.Navisworks.Api.Interop.LcUCIPExecutionContext.eTOOLBAR
+                );
             }
             catch
             {
                 // Fallback
                 doc.ActiveView.FocusOnCurrentSelection();
+            }
+        }
+
+        public static void ClearSectionBox(Document doc)
+        {
+            try
+            {
+                var vp = doc.CurrentViewpoint.ToViewpoint();
+                var clipPlanes = vp?.InternalClipPlanes;
+                bool isSectioningEnabled = clipPlanes != null && clipPlanes.IsEnabled();
+
+                if (isSectioningEnabled)
+                {
+                    Autodesk.Navisworks.Api.Interop.LcRmFrameworkInterface.ExecuteCommand(
+                        "RoamerGUI_OM_SECTION_MASTER_ENABLE",
+                        Autodesk.Navisworks.Api.Interop.LcUCIPExecutionContext.eTOOLBAR
+                    );
+                }
+            }
+            catch
+            {
+                // Fallback using COM
+                try
+                {
+                    dynamic state = ComApiBridge.State;
+                    dynamic clipPlanes = state.CurrentView.ClipPlanes;
+                    clipPlanes.Mode = 0; // nwEClipMode.eNone
+                }
+                catch { }
             }
         }
 
