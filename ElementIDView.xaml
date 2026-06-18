@@ -5,42 +5,279 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:RUKNBIM.ElementID"
              mc:Ignorable="d"
-             d:DesignHeight="350" d:DesignWidth="300"
-             Background="White">
-    <Grid Margin="10">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
+             d:DesignHeight="520" d:DesignWidth="300"
+             Background="#F0F4F8">
+    <UserControl.Resources>
+        <!-- Primary blue button -->
+        <Style x:Key="PrimaryButton" TargetType="Button">
+            <Setter Property="Height" Value="34"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Background" Value="#0078D7"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="5"
+                                Padding="8,0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#005A9E"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#004578"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
-        <TextBlock Text="Paste Revit Element IDs (newline or comma separated):"
-                   TextWrapping="Wrap"
-                   FontWeight="Bold"
-                   Margin="0,0,0,5"/>
+        <!-- Success green button -->
+        <Style x:Key="SuccessButton" TargetType="Button" BasedOn="{StaticResource PrimaryButton}">
+            <Setter Property="Background" Value="#107C41"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="5"
+                                Padding="8,0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#0B5E30"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#063D20"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
-        <TextBox Grid.Row="1"
-                 Text="{Binding ElementIdsInput, UpdateSourceTrigger=PropertyChanged}"
-                 AcceptsReturn="True"
-                 VerticalScrollBarVisibility="Auto"
-                 Margin="0,0,0,10"/>
+        <!-- Orange/warning button -->
+        <Style x:Key="WarningButton" TargetType="Button" BasedOn="{StaticResource PrimaryButton}">
+            <Setter Property="Background" Value="#D83B01"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="5"
+                                Padding="8,0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#A62D00"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#7A2100"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
-        <StackPanel Grid.Row="2" Orientation="Vertical" Margin="0,0,0,10">
-            <Button Content="Fast Search &amp; Select" Command="{Binding SearchCommand}" Height="35" FontWeight="Bold" Background="#0078D7" Foreground="White" BorderThickness="0" />
+        <!-- Neutral grey button -->
+        <Style x:Key="NeutralButton" TargetType="Button" BasedOn="{StaticResource PrimaryButton}">
+            <Setter Property="Background" Value="#5E5E5E"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="5"
+                                Padding="8,0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#404040"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#2D2D2D"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Teal button -->
+        <Style x:Key="TealButton" TargetType="Button" BasedOn="{StaticResource PrimaryButton}">
+            <Setter Property="Background" Value="#008272"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="5"
+                                Padding="8,0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#005A50"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#003C36"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Section label style -->
+        <Style x:Key="SectionLabel" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="10"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#555555"/>
+            <Setter Property="Margin" Value="0,8,0,4"/>
+        </Style>
+
+        <!-- Card border -->
+        <Style x:Key="Card" TargetType="Border">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Margin" Value="0,0,0,8"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#CCCCCC" BlurRadius="4" ShadowDepth="1" Opacity="0.4"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="10">
+
+            <!-- ── Header ── -->
+            <Border Background="#0078D7" CornerRadius="6" Padding="10,8" Margin="0,0,0,10">
+                <StackPanel>
+                    <TextBlock Text="RUKN BIM" FontSize="15" FontWeight="Bold" Foreground="White"/>
+                    <TextBlock Text="Element ID Selector" FontSize="11" Foreground="#CCEEFF"/>
+                </StackPanel>
+            </Border>
+
+            <!-- ── Search Section ── -->
+            <Border Style="{StaticResource Card}">
+                <StackPanel>
+                    <TextBlock Text="🔍  Search" Style="{StaticResource SectionLabel}"/>
+                    <TextBlock Text="Paste Revit Element IDs (newline or comma):"
+                               TextWrapping="Wrap" FontSize="11" Foreground="#333333" Margin="0,0,0,5"/>
+                    <TextBox Text="{Binding ElementIdsInput, UpdateSourceTrigger=PropertyChanged}"
+                             AcceptsReturn="True"
+                             Height="80"
+                             VerticalScrollBarVisibility="Auto"
+                             FontSize="12"
+                             Padding="5"
+                             BorderBrush="#BBBBBB"
+                             BorderThickness="1"
+                             Margin="0,0,0,8"/>
+                    <Button Content="⚡  Fast Search &amp; Select"
+                            Command="{Binding SearchCommand}"
+                            Style="{StaticResource PrimaryButton}"
+                            Height="38"
+                            FontSize="13"/>
+                </StackPanel>
+            </Border>
+
+            <!-- ── Visibility / Isolate Section ── -->
+            <Border Style="{StaticResource Card}">
+                <StackPanel>
+                    <TextBlock Text="👁  Visibility" Style="{StaticResource SectionLabel}"/>
+                    <Button Content="🔒  Isolate Selection"
+                            Command="{Binding IsolateCommand}"
+                            Style="{StaticResource SuccessButton}"
+                            Margin="0,0,0,6"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="6"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" Content="Hide Others"
+                                Command="{Binding HideUnselectedCommand}"
+                                Style="{StaticResource WarningButton}"/>
+                        <Button Grid.Column="2" Content="Restore All"
+                                Command="{Binding RestoreVisibilityCommand}"
+                                Style="{StaticResource NeutralButton}"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- ── Camera Section ── -->
+            <Border Style="{StaticResource Card}">
+                <StackPanel>
+                    <TextBlock Text="📷  Camera" Style="{StaticResource SectionLabel}"/>
+                    <Button Content="🎯  Focus Camera"
+                            Command="{Binding FocusCameraCommand}"
+                            Style="{StaticResource TealButton}"
+                            Margin="0,0,0,6"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="6"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" Content="💾 Save View"
+                                Command="{Binding SaveViewpointCommand}"
+                                Style="{StaticResource NeutralButton}"/>
+                        <Button Grid.Column="2" Content="↩ Restore View"
+                                Command="{Binding RestoreViewpointCommand}"
+                                Style="{StaticResource NeutralButton}"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- ── Section Box Section ── -->
+            <Border Style="{StaticResource Card}">
+                <StackPanel>
+                    <TextBlock Text="📦  Section Box" Style="{StaticResource SectionLabel}"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="6"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" Content="Create Box"
+                                Command="{Binding SectionBoxCommand}"
+                                Style="{StaticResource PrimaryButton}"/>
+                        <Button Grid.Column="2" Content="✖ Clear Box"
+                                Command="{Binding ClearSectionBoxCommand}"
+                                Style="{StaticResource WarningButton}"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- ── Data Tools Section ── -->
+            <Border Style="{StaticResource Card}">
+                <StackPanel>
+                    <TextBlock Text="📊  Data Tools" Style="{StaticResource SectionLabel}"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="6"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" Content="📥 Import Excel"
+                                Command="{Binding ImportExcelCommand}"
+                                Style="{StaticResource SuccessButton}"/>
+                        <Button Grid.Column="2" Content="📤 Export Report"
+                                Command="{Binding ExportReportCommand}"
+                                Style="{StaticResource NeutralButton}"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
         </StackPanel>
-
-        <StackPanel Grid.Row="3" Orientation="Vertical">
-            <TextBlock Text="Data Tools" FontWeight="SemiBold" Margin="0,5,0,5"/>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="5" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" Content="Import Excel" Command="{Binding ImportExcelCommand}" Height="30" />
-                <Button Grid.Column="2" Content="Export Report" Command="{Binding ExportReportCommand}" Height="30" />
-            </Grid>
-        </StackPanel>
-    </Grid>
+    </ScrollViewer>
 </UserControl>

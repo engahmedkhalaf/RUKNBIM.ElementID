@@ -34,6 +34,15 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
 
+  <!-- Exclude the decompiled reference folder from all build actions -->
+  <ItemGroup>
+    <Compile Remove="decompiled_selectbyrevitid_2024\**" />
+    <Page Remove="decompiled_selectbyrevitid_2024\**" />
+    <None Remove="decompiled_selectbyrevitid_2024\**" />
+    <EmbeddedResource Remove="decompiled_selectbyrevitid_2024\**" />
+    <Content Remove="decompiled_selectbyrevitid_2024\**" />
+  </ItemGroup>
+
   <ItemGroup>
     <None Update="Images\ElementID_16.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

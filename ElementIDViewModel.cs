@@ -104,6 +104,13 @@ namespace RUKNBIM.ElementID
         }
 
         [RelayCommand]
+        private void ClearSectionBox()
+        {
+            var doc = Autodesk.Navisworks.Api.Application.ActiveDocument;
+            NavisworksActions.ClearSectionBox(doc);
+        }
+
+        [RelayCommand]
         private void FocusCamera()
         {
             var doc = Autodesk.Navisworks.Api.Application.ActiveDocument;
