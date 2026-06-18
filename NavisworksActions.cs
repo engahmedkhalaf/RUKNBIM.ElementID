@@ -13,14 +13,6 @@ namespace RUKNBIM.ElementID
             if (items != null && items.Count > 0)
             {
                 doc.CurrentSelection.CopyFrom(items);
-                try
-                {
-                    Autodesk.Navisworks.Api.Interop.LcRmFrameworkInterface.ExecuteCommand(
-                        "RoamerGUI_MODE_SELECT",
-                        Autodesk.Navisworks.Api.Interop.LcUCIPExecutionContext.eTOOLBAR
-                    );
-                }
-                catch { }
             }
         }
 
