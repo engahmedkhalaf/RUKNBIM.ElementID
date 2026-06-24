@@ -1,5 +1,5 @@
 [Setup]
-AppName=Rukn Navisworks Element ID
+AppName=RUKNBIM Smart Select
 AppVersion=1.0.0
 AppPublisher=RUKNBIM
 DefaultDirName={userappdata}\Autodesk\ApplicationPlugins\RUKNBIM.ElementID.bundle
@@ -7,7 +7,7 @@ DefaultGroupName=RUKNBIM
 Compression=lzma2
 SolidCompression=yes
 OutputDir=Output
-OutputBaseFilename=Rukn.ElementID.Setup
+OutputBaseFilename=RUKNBIM.SmartSelect.Setup
 DisableDirPage=yes
 DisableProgramGroupPage=yes
 DirExistsWarning=no
@@ -20,5 +20,5 @@ Source: "C:\Users\sati7\AppData\Roaming\Autodesk\ApplicationPlugins\RUKNBIM.Elem
 Source: "C:\Users\sati7\AppData\Roaming\Autodesk\ApplicationPlugins\RUKNBIM.ElementID.bundle\Contents\*"; DestDir: "{app}\Contents"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Messages]
-SetupAppTitle=Install Rukn Navisworks Element ID
-SetupWindowTitle=Rukn Element ID Installer
+SetupAppTitle=Install RUKNBIM Smart Select
+SetupWindowTitle=RUKNBIM Smart Select Installer
