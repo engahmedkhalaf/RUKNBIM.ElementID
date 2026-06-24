@@ -35,10 +35,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Images\ElementID_16.ico">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Images\ElementID_32.png">
+    <None Update="Images\*.*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="en-US\RUKNBIM.ElementID.xaml">
@@ -61,23 +58,7 @@
 
   <!-- Auto-Deploy to Navisworks AppData ApplicationPlugins Folder -->
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <!-- Package Contents -->
-    <Exec Command="xcopy &quot;$(ProjectDir)PackageContents.xml&quot; &quot;$(AppData)\Autodesk\ApplicationPlugins\RUKNBIM.ElementID.bundle\&quot; /Y /I" />
-
-    <!-- 2022 -->
-    <Exec Command="xcopy &quot;$(TargetDir)*.*&quot; &quot;$(AppData)\Autodesk\ApplicationPlugins\RUKNBIM.ElementID.bundle\Contents\2022\RUKNBIM.ElementID\&quot; /Y /I /S" />
-
-    <!-- 2023 -->
-    <Exec Command="xcopy &quot;$(TargetDir)*.*&quot; &quot;$(AppData)\Autodesk\ApplicationPlugins\RUKNBIM.ElementID.bundle\Contents\2023\RUKNBIM.ElementID\&quot; /Y /I /S" />
-
-    <!-- 2024 -->
-    <Exec Command="xcopy &quot;$(TargetDir)*.*&quot; &quot;$(AppData)\Autodesk\ApplicationPlugins\RUKNBIM.ElementID.bundle\Contents\2024\RUKNBIM.ElementID\&quot; /Y /I /S" />
-
-    <!-- 2025 -->
-    <Exec Command="xcopy &quot;$(TargetDir)*.*&quot; &quot;$(AppData)\Autodesk\ApplicationPlugins\RUKNBIM.ElementID.bundle\Contents\2025\RUKNBIM.ElementID\&quot; /Y /I /S" />
-
-    <!-- 2026 -->
-    <Exec Command="xcopy &quot;$(TargetDir)*.*&quot; &quot;$(AppData)\Autodesk\ApplicationPlugins\RUKNBIM.ElementID.bundle\Contents\2026\RUKNBIM.ElementID\&quot; /Y /I /S" />
+    <Exec Command="powershell -NoProfile -ExecutionPolicy Bypass -Command &quot;Copy-Item -Path '$(ProjectDir)PackageContents.xml' -Destination '$(AppData)\Autodesk\ApplicationPlugins\RUKNBIM.ElementID.bundle\' -Force; foreach ($year in 2022..2026) { $dest = '$(AppData)\Autodesk\ApplicationPlugins\RUKNBIM.ElementID.bundle\Contents\' + $year + '\RUKNBIM.ElementID\'; if (-not (Test-Path $dest)) { New-Item -ItemType Directory -Path $dest -Force | Out-Null }; Copy-Item -Path '$(TargetDir)*' -Destination $dest -Recurse -Force }&quot;" />
   </Target>
 
 </Project>
