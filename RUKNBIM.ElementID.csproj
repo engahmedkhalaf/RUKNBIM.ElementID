@@ -58,7 +58,7 @@
 
   <!-- Auto-Deploy to Navisworks AppData ApplicationPlugins Folder -->
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="powershell -NoProfile -ExecutionPolicy Bypass -Command &quot;Copy-Item -Path '$(ProjectDir)PackageContents.xml' -Destination '$(AppData)\Autodesk\ApplicationPlugins\RUKNBIM.ElementID.bundle\' -Force; foreach ($year in 2022..2026) { $dest = '$(AppData)\Autodesk\ApplicationPlugins\RUKNBIM.ElementID.bundle\Contents\' + $year + '\RUKNBIM.ElementID\'; if (-not (Test-Path $dest)) { New-Item -ItemType Directory -Path $dest -Force | Out-Null }; Copy-Item -Path '$(TargetDir)*' -Destination $dest -Recurse -Force }&quot;" />
+    <Exec Command="powershell -NoProfile -ExecutionPolicy Bypass -Command &quot;$bundle = '$(AppData)\Autodesk\ApplicationPlugins\RUKNBIM.ElementID.bundle\'; if (-not (Test-Path $bundle)) { New-Item -ItemType Directory -Path $bundle -Force | Out-Null }; Copy-Item -Path '$(ProjectDir)PackageContents.xml' -Destination $bundle -Force; foreach ($year in 2022..2026) { $dest = $bundle + 'Contents\' + $year + '\RUKNBIM.ElementID\'; if (-not (Test-Path $dest)) { New-Item -ItemType Directory -Path $dest -Force | Out-Null }; Copy-Item -Path '$(TargetDir)*' -Destination $dest -Recurse -Force }&quot;" />
   </Target>
 
 </Project>

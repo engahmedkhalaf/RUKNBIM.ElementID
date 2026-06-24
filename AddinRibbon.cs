@@ -20,10 +20,10 @@ namespace RUKNBIM.ElementID
         }
     }
 
-    [PluginAttribute("RUKNBIM.ElementID", "RUKN", DisplayName = "Rukn")]
+    [PluginAttribute("RUKNBIM.ElementID", "RUKN", DisplayName = "RUKNBIM Smart Select")]
     [Strings("RUKNBIM.ElementID.name")]
     [RibbonLayout("RUKNBIM.ElementID.xaml")]
-    [RibbonTab("RuknTab", DisplayName = "Rukn")]
+    [RibbonTab("RuknTab", DisplayName = "RUKNBIM Smart Select")]
     [Command("ZoomToSelection", DisplayName = "Zoom To\nSelection", Icon = "Images\\R_icon_blue_16px.png", LargeIcon = "Images\\R_icon_blue_32px.png")]
     [Command("IsolateSelection", DisplayName = "Isolate\nSelection", Icon = "Images\\R_icon_green_16px.png", LargeIcon = "Images\\R_icon_green_32px.png")]
     [Command("ClearIsolation", DisplayName = "Clear\nIsolation", Icon = "Images\\R_icon_teal_16px.png", LargeIcon = "Images\\R_icon_teal_32px.png")]

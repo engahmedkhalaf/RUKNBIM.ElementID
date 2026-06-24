@@ -1,6 +1,6 @@
 # Navisworks String Table
-Tab_Rukn.Title=Rukn
-PanelSource_Rukn.Title=Rukn
+Tab_Rukn.Title=RUKNBIM Smart Select
+PanelSource_Rukn.Title=RUKNBIM Smart Select
 Btn_ZoomToSelection.Text=Zoom To Selection
 Btn_ZoomToSelection.ToolTip=Zoom to selected elements
 Btn_IsolateSelection.Text=Isolate Selection
