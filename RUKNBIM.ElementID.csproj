@@ -32,6 +32,8 @@
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Net.Http" />
   </ItemGroup>
 
   <ItemGroup>

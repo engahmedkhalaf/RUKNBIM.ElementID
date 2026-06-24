@@ -1,3 +1,4 @@
+using System;
 using Autodesk.Navisworks.Api.Plugins;
 using System.Windows;
 using System.Windows.Controls;
@@ -33,9 +34,48 @@ namespace RUKNBIM.ElementID
     [Command("ShowInfo", DisplayName = "Info", Icon = "Images\\Info_16.png", LargeIcon = "Images\\Info_32.png")]
     public class RibbonCommandHandler : CommandHandlerPlugin
     {
+        private static bool CheckLicense()
+        {
+            try
+            {
+                // Run license check on ThreadPool to avoid UI deadlocks
+                var info = System.Threading.Tasks.Task.Run(async () => 
+                    await SupabaseLicensingClient.ValidateLicenseAsync()
+                ).GetAwaiter().GetResult();
+
+                if (info.Status == LicenseStatus.Valid)
+                {
+                    return true;
+                }
+
+                // Show Login Window if not valid
+                var loginWindow = new LoginWindow();
+                var result = loginWindow.ShowDialog();
+
+                if (result == true && loginWindow.ResultLicense != null && loginWindow.ResultLicense.Status == LicenseStatus.Valid)
+                {
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Licensing system error: {ex.Message}", "RUKNBIM Licensing Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            return false;
+        }
+
         public override int ExecuteCommand(string name, params string[] parameters)
         {
             var doc = Autodesk.Navisworks.Api.Application.ActiveDocument;
+
+            // Allow the Info command to run without a license
+            if (name != "ShowInfo")
+            {
+                if (!CheckLicense())
+                {
+                    return 0;
+                }
+            }
 
             switch (name)
             {
