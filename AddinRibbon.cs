@@ -116,7 +116,7 @@ namespace RUKNBIM.ElementID
             {
                 Title = "RUKNBIM Info",
                 Width = 420,
-                Height = 250,
+                Height = 280,
                 Background = new SolidColorBrush((System.Windows.Media.Color)ColorConverter.ConvertFromString("#0B132B")),
                 WindowStartupLocation = WindowStartupLocation.CenterScreen,
                 ResizeMode = ResizeMode.NoResize,
@@ -135,6 +135,16 @@ namespace RUKNBIM.ElementID
                 Margin = new Thickness(0, 0, 0, 4)
             };
             stackPanel.Children.Add(versionLabel);
+
+            var licenseStatusLabel = new TextBlock
+            {
+                Text = "License: Checking...",
+                Foreground = Brushes.Gray,
+                FontSize = 13,
+                FontWeight = FontWeights.SemiBold,
+                Margin = new Thickness(0, 0, 0, 8)
+            };
+            stackPanel.Children.Add(licenseStatusLabel);
 
             var updateStatusLabel = new TextBlock
             {
@@ -210,6 +220,41 @@ namespace RUKNBIM.ElementID
             };
             webPanel.Children.Add(webLink);
             stackPanel.Children.Add(webPanel);
+
+            // Check licensing and trial status asynchronously
+            System.Threading.Tasks.Task.Run(async () =>
+            {
+                try
+                {
+                    var info = await SupabaseLicensingClient.ValidateLicenseAsync();
+                    window.Dispatcher.Invoke(() =>
+                    {
+                        if (info.Status == LicenseStatus.Valid)
+                        {
+                            licenseStatusLabel.Text = $"License: Active ({info.DaysRemaining} days remaining)";
+                            licenseStatusLabel.Foreground = Brushes.LightGreen;
+                        }
+                        else if (info.Status == LicenseStatus.Expired)
+                        {
+                            licenseStatusLabel.Text = "License: Trial Expired";
+                            licenseStatusLabel.Foreground = Brushes.Red;
+                        }
+                        else
+                        {
+                            licenseStatusLabel.Text = "License: Not Activated";
+                            licenseStatusLabel.Foreground = Brushes.Orange;
+                        }
+                    });
+                }
+                catch
+                {
+                    window.Dispatcher.Invoke(() =>
+                    {
+                        licenseStatusLabel.Text = "License: Could not verify";
+                        licenseStatusLabel.Foreground = Brushes.Gray;
+                    });
+                }
+            });
 
             System.Threading.Tasks.Task.Run(() =>
             {
