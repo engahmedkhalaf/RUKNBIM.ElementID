@@ -1,6 +1,6 @@
 using System.Windows.Controls;
 
-namespace RUKNBIM.ElementID
+namespace RUKNBIM.SmartSelect
 {
     public partial class ElementIDView : UserControl
     {

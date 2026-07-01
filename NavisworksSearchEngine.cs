@@ -2,7 +2,7 @@ using Autodesk.Navisworks.Api;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RUKNBIM.ElementID
+namespace RUKNBIM.SmartSelect
 {
     public class NavisworksSearchEngine
     {

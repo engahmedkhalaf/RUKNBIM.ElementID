@@ -2,7 +2,7 @@ using OfficeOpenXml;
 using System.Collections.Generic;
 using System.IO;
 
-namespace RUKNBIM.ElementID
+namespace RUKNBIM.SmartSelect
 {
     public class ExcelDataService : IDataService
     {

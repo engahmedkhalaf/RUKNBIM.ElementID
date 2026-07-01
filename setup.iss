@@ -2,7 +2,7 @@
 AppName=RUKNBIM Smart Select
 AppVersion=1.0.0
 AppPublisher=RUKNBIM
-DefaultDirName={userappdata}\Autodesk\ApplicationPlugins\RUKNBIM.ElementID.bundle
+DefaultDirName={userappdata}\Autodesk\ApplicationPlugins\RUKNBIM.SmartSelect.bundle
 DefaultGroupName=RUKNBIM
 Compression=lzma2
 SolidCompression=yes
@@ -14,10 +14,10 @@ DirExistsWarning=no
 
 [Files]
 ; Copy PackageContents.xml to the bundle root
-Source: "C:\Users\sati7\AppData\Roaming\Autodesk\ApplicationPlugins\RUKNBIM.ElementID.bundle\PackageContents.xml"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\sati7\AppData\Roaming\Autodesk\ApplicationPlugins\RUKNBIM.SmartSelect.bundle\PackageContents.xml"; DestDir: "{app}"; Flags: ignoreversion
 
 ; Copy all contents recursively (dlls, images, localizations)
-Source: "C:\Users\sati7\AppData\Roaming\Autodesk\ApplicationPlugins\RUKNBIM.ElementID.bundle\Contents\*"; DestDir: "{app}\Contents"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\Users\sati7\AppData\Roaming\Autodesk\ApplicationPlugins\RUKNBIM.SmartSelect.bundle\Contents\*"; DestDir: "{app}\Contents"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Messages]
 SetupAppTitle=Install RUKNBIM Smart Select
@@ -36,7 +36,7 @@ procedure TermsButtonClick(Sender: TObject);
 var
   ErrorCode: Integer;
 begin
-  ShellExec('open', 'https://github.com/engahmedkhalaf/RUKNBIM.ElementID', '', '', SW_SHOWNORMAL, ewNoWait, ErrorCode);
+  ShellExec('open', 'https://github.com/engahmedkhalaf/RUKNBIM.SmartSelect', '', '', SW_SHOWNORMAL, ewNoWait, ErrorCode);
 end;
 
 procedure InitializeWizard();

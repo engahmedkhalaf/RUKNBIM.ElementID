@@ -3,7 +3,7 @@ using Autodesk.Navisworks.Api.ComApi;
 using System;
 using System.Linq;
 
-namespace RUKNBIM.ElementID
+namespace RUKNBIM.SmartSelect
 {
     public static class NavisworksActions
     {
@@ -181,10 +181,56 @@ namespace RUKNBIM.ElementID
             }
         }
 
+        private static string GetRevitId(ModelItem item)
+        {
+            if (item == null || item.PropertyCategories == null) return null;
+
+            var prop = item.PropertyCategories.FindPropertyByDisplayName("Item", "Element Id");
+            if (prop != null && prop.Value != null)
+                return prop.Value.ToDisplayString();
+
+            prop = item.PropertyCategories.FindPropertyByDisplayName("Element ID", "Value");
+            if (prop != null && prop.Value != null)
+                return prop.Value.ToDisplayString();
+
+            return null;
+        }
+
         public static void SaveViewpoint(Document doc, string name)
         {
             SavedViewpoint newViewPoint = new SavedViewpoint(doc.CurrentViewpoint.ToViewpoint());
-            newViewPoint.DisplayName = string.IsNullOrWhiteSpace(name) ? $"Saved View {DateTime.Now:HH:mm}" : name;
+            
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                string suffix = "";
+                var selectedItems = doc.CurrentSelection.SelectedItems;
+                if (selectedItems != null && selectedItems.Count > 0)
+                {
+                    var ids = selectedItems
+                        .Select(item => GetRevitId(item))
+                        .Where(id => !string.IsNullOrEmpty(id))
+                        .Distinct()
+                        .ToList();
+
+                    if (ids.Count > 0)
+                    {
+                        if (ids.Count <= 3)
+                        {
+                            suffix = $" (ID: {string.Join(", ", ids)})";
+                        }
+                        else
+                        {
+                            suffix = $" (IDs: {string.Join(", ", ids.Take(3))}, ...)";
+                        }
+                    }
+                }
+                newViewPoint.DisplayName = $"Saved View {DateTime.Now:dd-MM-yyyy HH:mm}{suffix}";
+            }
+            else
+            {
+                newViewPoint.DisplayName = name;
+            }
+
             doc.SavedViewpoints.AddCopy(newViewPoint);
         }
 

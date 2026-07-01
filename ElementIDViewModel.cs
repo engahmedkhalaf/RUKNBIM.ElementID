@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 
-namespace RUKNBIM.ElementID
+namespace RUKNBIM.SmartSelect
 {
     public partial class ElementIDViewModel : ObservableObject
     {

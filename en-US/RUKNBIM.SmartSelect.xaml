@@ -1,4 +1,4 @@
-<RibbonControl x:Uid="RUKNBIM_ElementID_Ribbon"
+<RibbonControl x:Uid="RUKNBIM_SmartSelect_Ribbon"
     xmlns="clr-namespace:Autodesk.Windows;assembly=AdWindows"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:nvw="clr-namespace:Autodesk.Navisworks.Gui.Roamer.AIRLook;assembly=navisworks.gui.roamer">
@@ -11,7 +11,7 @@
                 <nvw:NWRibbonButton x:Uid="Btn_AutoSectionBox" Id="AutoSectionBox" Size="Large" Text="Auto Section Box" ShowText="True" Orientation="Vertical" />
                 <nvw:NWRibbonButton x:Uid="Btn_ClearSectionBox" Id="ClearSectionBox" Size="Large" Text="Clear Section Box" ShowText="True" Orientation="Vertical" />
                 <nvw:NWRibbonButton x:Uid="Btn_SaveViewpoint" Id="SaveViewpoint" Size="Large" Text="Save Viewpoint" ShowText="True" Orientation="Vertical" />
-                <nvw:NWRibbonButton x:Uid="Btn_ShowInfo" Id="ShowInfo" Size="Large" Text="Info" ShowText="True" Orientation="Vertical" />
+                <nvw:NWRibbonButton x:Uid="Btn_ShowInfo" Id="ShowInfo" Size="Large" Text="License Manager" ShowText="True" Orientation="Vertical" />
             </RibbonPanelSource>
         </RibbonPanel>
     </RibbonTab>

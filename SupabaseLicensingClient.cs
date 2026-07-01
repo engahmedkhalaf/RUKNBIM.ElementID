@@ -7,7 +7,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace RUKNBIM.ElementID
+namespace RUKNBIM.SmartSelect
 {
     public enum LicenseStatus
     {
@@ -82,6 +82,27 @@ namespace RUKNBIM.ElementID
         }
 
         /// <summary>
+        /// Quick GET to check if Supabase is reachable.
+        /// </summary>
+        public static async Task<bool> PingAsync()
+        {
+            try
+            {
+                var request = new HttpRequestMessage(HttpMethod.Get, SupabaseUrl.TrimEnd('/') + "/rest/v1/");
+                request.Headers.Add("apikey", SupabaseAnonKey);
+                using (var cts = new System.Threading.CancellationTokenSource(TimeSpan.FromSeconds(5)))
+                {
+                    var response = await Client.SendAsync(request, cts.Token);
+                    return response.IsSuccessStatusCode || response.StatusCode == HttpStatusCode.Unauthorized || response.StatusCode == HttpStatusCode.BadRequest;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Validates current licensing status using cached token (with online verification if possible).
         /// </summary>
         public static async Task<LicenseInfo> ValidateLicenseAsync()
@@ -108,9 +129,11 @@ namespace RUKNBIM.ElementID
                             licenseInfo.TrialEndDate ?? DateTime.UtcNow.AddDays(3650), true);
                         return licenseInfo;
                     }
-                    else if (licenseInfo.Status == LicenseStatus.Expired || licenseInfo.Status == LicenseStatus.Disabled)
+                    else if (licenseInfo.Status == LicenseStatus.Expired || 
+                             licenseInfo.Status == LicenseStatus.Disabled || 
+                             licenseInfo.Status == LicenseStatus.InvalidCredentials)
                     {
-                        // Server explicitly invalidated license
+                        // Server explicitly invalidated license (expired, disabled, or revoked/not found)
                         DeleteCache();
                         return licenseInfo;
                     }

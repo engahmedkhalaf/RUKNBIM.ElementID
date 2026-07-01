@@ -13,5 +13,5 @@ Btn_ClearSectionBox.Text=Clear Section Box
 Btn_ClearSectionBox.ToolTip=Clear current section box
 Btn_SaveViewpoint.Text=Save Viewpoint
 Btn_SaveViewpoint.ToolTip=Save current viewpoint
-Btn_ShowInfo.Text=Info
-Btn_ShowInfo.ToolTip=Show product version and contact info
+Btn_ShowInfo.Text=License Manager
+Btn_ShowInfo.ToolTip=Show License Manager and activation details

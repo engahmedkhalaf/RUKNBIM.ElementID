@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace RUKNBIM.ElementID
+namespace RUKNBIM.SmartSelect
 {
     public interface IDataService
     {
